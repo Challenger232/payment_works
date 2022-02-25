@@ -1,9 +1,19 @@
 import React from 'react';
+import axios from "axios";
 
 const SubwayLines = () => {
-
     function buttonAction() {
         alert('Button Clicked');
+    }
+
+    function getSubwayLines() {
+        axios.get('https://api-v3.mbta.com/routes?filter[type]=0,1')
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     return (
