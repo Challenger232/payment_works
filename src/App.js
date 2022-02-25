@@ -1,9 +1,11 @@
 import './App.css';
-import SubwayLines from './SubwayLines'
+import Header from './Header'
+import SubwayLines from "./SubwayLines";
 
 function App() {
     return (
     <div className="App">
+      <Header />
       <SubwayLines />
     </div>
   );
