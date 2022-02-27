@@ -21,7 +21,6 @@ class SubwayLines extends Component {
         axios.get('https://api-v3.mbta.com/stops?filter[route]='+id)
             .then(response => {
                 this.setState({ stops: response.data.data})
-                console.log(response.data.data)
             })
             .catch(error => {
                 console.log(error);
