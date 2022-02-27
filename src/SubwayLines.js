@@ -58,9 +58,9 @@ class SubwayLines extends Component {
                     </div>
                 </div>
                 <div className="flex w-3/4 flex flex-col">
-                    <h1 className="text-gray-800 text-2xl px-4 font-bold flex">
+                    <div className="text-gray-800 text-2xl px-4 font-bold flex">
                         { this.state.currentRoute && <h1>{this.state.currentRoute} Stops</h1> }
-                    </h1>
+                    </div>
                     <div className="grid grid-cols-4 gap-4 flex p-4">
                         { this.state.stops === null && <p>Loading stops...</p> }
                         { this.state.stops && this.state.stops.map(data => (
