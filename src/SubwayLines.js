@@ -1,49 +1,55 @@
-import React,{useState} from 'react';
+import React,{Component} from 'react';
 import axios from "axios";
 
-const SubwayLines = () => {
-    const [routeData,setRouteData]=useState([])
+class SubwayLines extends Component {
 
-    function getSubwayStops() {
-        alert('Button Clicked');
+    constructor(props) {
+        super(props);
+        this.state = {
+            routes : [],
+            stops : [],
+        };
     }
 
-    function getSubwayLines() {
+    componentDidMount () {
+        this.getSubwayLines()
+        this.getSubwayStops()
+    }
+
+    getSubwayStops() {
+        // alert('Button Clicked');
+    }
+
+    getSubwayLines() {
         axios.get('https://api-v3.mbta.com/routes?filter[type]=0,1')
             .then(response => {
-                console.log(response.data);
-                setRouteData(response.data.data)
+                this.setState({ routes: response.data.data})
             })
             .catch(error => {
                 console.log(error);
-            });
+            })
     }
 
-    const routes=routeData.map((data,id)=>{
-        console.log(data);
-        return <div className="grid grid-cols-2 gap-8" key={id}>
-            <div className="flex flex-col">
-                <h1 className="">ID: {data.id}</h1>
-                <h1 className="">Name: {data.attributes.long_name}</h1>
-            </div>
-            <div className="flex">
-                <button className="bg-white text-blue-600 text-sm font-semibold rounded-md px-4 py-2 shadow mt-2 sm:mt-0 mx-2" onClick={getSubwayStops}>
-                    Show Stops
-                </button>
-            </div>
-        </div>
-    })
-
-    return (
-        <div className="px-8">
-            <button className="bg-white text-blue-600 text-sm font-semibold rounded-md px-4 py-2 shadow mt-2 sm:mt-0" onClick={getSubwayLines}>
-                Click here to get all subway lines
-            </button>
-            <div className="grid sm:grid-cols-2 gap-4 p-8">
-                {routes}
-            </div>
-        </div>
-    );
-};
+    render() {
+        return (
+            <aside className="w-96">
+                <div className="px-3 py-4 overflow-y-auto rounded bg-gray-200 dark:bg-gray-800">
+                    { this.state.routes === null && <p>Loading routes...</p> }
+                    {
+                        this.state.routes &&
+                        this.state.routes.map(data=> (
+                            <div key={data.id}>
+                                 <button className="flex flex-col items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 w-full">
+                                     <span className="">ID: {data.id}</span>
+                                     <span>Name: {data.attributes.long_name}</span>
+                                 </button>
+                            </div>
+                        ))
+                    }
+                </div>
+            </aside>
+        );
+    }
+}
 
 export default SubwayLines;
